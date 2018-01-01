@@ -157,7 +157,7 @@ class SiteController extends Controller
             }
         }
 
-        return $this->render('signup', [
+        return $this->render('_form', [
             'model' => $model,
         ]);
     }

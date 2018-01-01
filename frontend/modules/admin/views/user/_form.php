@@ -1,0 +1,40 @@
+<?php
+
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
+/* @var $this yii\web\View */
+/* @var $model common\models\User */
+/* @var $form yii\widgets\ActiveForm */
+/* @var $roles app\modules\admin\models\Role */
+?>
+
+<div class="user-form">
+
+    <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+
+    <?= $form->field($model, 'email') ?>
+
+    <?= $form->field($model, 'password')->passwordInput() ?>
+    <?php
+    $roles = Yii::$app->authManager;
+    $roles = $roles->getRoles();
+//    var_dump($roles);die;
+    // формируем массив, с ключем равным полю 'id' и значением равным полю 'name'
+    $items = ArrayHelper::getColumn($roles, 'name');
+    $params = [
+        'prompt' => 'Укажите Role'
+    ];
+    ?>
+    <?= $form->field($model, 'roles')->dropDownList($items, $params); ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+
+</div>
