@@ -7,6 +7,7 @@ use Yii;
 use common\models\User;
 use common\models\UserSearch;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -25,6 +26,15 @@ class UserController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => Yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['Логистик']
+                    ],
                 ],
             ],
         ];
@@ -59,9 +69,8 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a new User model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|\yii\web\Response
+     * @throws ForbiddenHttpException
      */
     public function actionCreate()
     {
@@ -70,6 +79,10 @@ class UserController extends Controller
             if ($user = $model->signup()) {
                     return $this->redirect(['/admin/user']);
             }
+        }
+
+        if (!\Yii::$app->user->can('Администратор', ['model' => $model])) {
+            throw new ForbiddenHttpException('Access denied');
         }
 
         return $this->render('create', [
