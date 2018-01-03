@@ -10,7 +10,7 @@ $this->title = 'Create Role';
 $this->params['breadcrumbs'][] = ['label' => 'Role', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="movie-create">
+<div class="role-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

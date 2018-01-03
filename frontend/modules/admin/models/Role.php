@@ -12,11 +12,17 @@ use yii\db\ActiveRecord;
  */
 class Role extends ActiveRecord
 {
+    /**
+     * @return string
+     */
     public static function tableName()
     {
         return 'auth_item';
     }
 
+    /**
+     * @return array
+     */
     public function rules()
     {
         return [
@@ -25,6 +31,9 @@ class Role extends ActiveRecord
         ];
     }
 
+    /**
+     * @return array
+     */
     public function attributeLabels()
     {
         return [

@@ -16,6 +16,7 @@ use yii\web\IdentityInterface;
  * @property string $password_reset_token
  * @property string $email
  * @property string $auth_key
+ * @property string $role
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -51,8 +52,11 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['status', 'required'],
+            ['status','integer'],
+
+            ['role', 'default', 'value' => 'simple user'],
+            ['role', 'string'],
         ];
     }
 
@@ -185,5 +189,17 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * Assignment Role with User Id
+     * @param $role
+     * @param $id
+     */
+    public function assignRole($role, $id)
+    {
+        $auth = Yii::$app->authManager;
+        $role = $auth->getRole($role);
+        $auth->assign($role, $id);
     }
 }

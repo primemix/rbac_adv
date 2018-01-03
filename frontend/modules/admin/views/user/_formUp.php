@@ -18,14 +18,20 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email') ?>
 
-    <?= $form->field($model, 'password')->passwordInput() ?>
-
     <?= $form->field($model, 'status')->dropDownList([
-    '10' => 'Active',
-    '20' => 'Deactivate',
+        '10' => 'Active',
+        '20' => 'Deactivate',
     ]) ?>
-    
-   
+
+    <?php
+    $roles = Yii::$app->authManager;
+    $roles = $roles->getRoles();
+    $items = ArrayHelper::getColumn($roles, 'name');
+    $params = [
+        'role' => 'Укажите Role'
+    ];
+    ?>
+    <?= $form->field($model, 'role')->dropDownList($items, $params); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

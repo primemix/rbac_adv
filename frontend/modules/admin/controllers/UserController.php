@@ -2,8 +2,6 @@
 
 namespace app\modules\admin\controllers;
 
-use app\modules\admin\models\Role;
-use app\modules\admin\models\RoleSearch;
 use frontend\models\SignupForm;
 use Yii;
 use common\models\User;
@@ -70,9 +68,7 @@ class UserController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
                     return $this->redirect(['/admin/user']);
-                }
             }
         }
 
@@ -91,8 +87,8 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->assignRole(Yii::$app->request->post('User')['role'], $id);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

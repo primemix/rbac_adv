@@ -7,8 +7,15 @@ use app\modules\admin\models\RoleSearch;
 use Yii;
 use yii\web\Controller;
 
+/**
+ * Class RbacController
+ * @package app\modules\admin\controllers
+ */
 class RbacController extends Controller
 {
+    /**
+     * @return string
+     */
     public function actionIndex()
     {
         $roles = new RoleSearch();
@@ -20,14 +27,16 @@ class RbacController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-    
+
+    /**
+     * @return string|\yii\web\Response
+     */
     public function actionCreate()
     {
         $model = new Role();
         if ($model->load(Yii::$app->request->post())) {
-            $NameRole =Yii::$app->request->post('Role')['name'];
             $auth = Yii::$app->authManager;
-            $admin = $auth->createRole($NameRole);
+            $admin = $auth->createRole(Yii::$app->request->post('Role')['name']);
             $auth->add($admin);
             return $this->redirect(['/admin/rbac']);
         } else {
@@ -37,6 +46,10 @@ class RbacController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     */
     public function actionDelete($id)
     {
         $auth = Yii::$app->authManager;
