@@ -68,5 +68,8 @@ Class Menu extends ActiveRecord
 
         $product = new Menu(['name' => 'product']);
         $product->prependTo($category);
+
+        $node = Menu::findOne(['name' => 'product']);
+        $node->prependTo(new Menu(['name' => 'type']));
     }
 }

@@ -221,7 +221,7 @@ class SiteController extends Controller
     public function actionCategory()
     {
         $menu = Menu::findOne(['name' => 'Category']);
-        $category = $menu->leaves()->all();
+        $category = $menu->children()->all();
 
 //        var_dump($category);die;
         
