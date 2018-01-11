@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use app\models\Menu;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -157,7 +158,7 @@ class SiteController extends Controller
             }
         }
 
-        return $this->render('signup', [
+        return $this->render('_form', [
             'model' => $model,
         ]);
     }
@@ -208,6 +209,23 @@ class SiteController extends Controller
 
         return $this->render('resetPassword', [
             'model' => $model,
+        ]);
+    }
+
+    public function actionMenu()
+    {
+        $menu = new Menu();
+        $menu->createMenu();
+    }
+
+    public function actionCategory($name)
+    {
+        $menu = Menu::findOne(['name' => $name]);
+        $category = $menu->children()->all();
+        
+        return $this->render('category', [
+            'menu' => $menu,
+            'category' => $category,
         ]);
     }
 }
