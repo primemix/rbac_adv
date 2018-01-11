@@ -5,7 +5,8 @@
 $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
+    <?= $menu->name ?><br>
 <?php foreach ($category as $item) : ?>
-    <?= $item->name ?>
+    - <?= $item->name ?><br>
     <?php endforeach; ?>
 </div>

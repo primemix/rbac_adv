@@ -218,14 +218,13 @@ class SiteController extends Controller
         $menu->createMenu();
     }
 
-    public function actionCategory()
+    public function actionCategory($name)
     {
-        $menu = Menu::findOne(['name' => 'Category']);
+        $menu = Menu::findOne(['name' => $name]);
         $category = $menu->children()->all();
-
-//        var_dump($category);die;
         
         return $this->render('category', [
+            'menu' => $menu,
             'category' => $category,
         ]);
     }

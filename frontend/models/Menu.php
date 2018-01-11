@@ -30,7 +30,10 @@ Class Menu extends ActiveRecord
         return [
             'tree' => [
                 'class' => NestedSetsBehavior::className(),
-                'treeAttribute' => 'tree',
+                // 'treeAttribute' => 'tree',
+//                 'leftAttribute' => 'lft',
+//                 'rightAttribute' => 'rgt',
+//                 'depthAttribute' => 'depth',
             ],
         ];
     }
@@ -63,13 +66,21 @@ Class Menu extends ActiveRecord
      */
     public function createMenu()
     {
-        $category = new Menu(['name' => 'category']);
-        $category->makeRoot();
+        Menu::deleteAll();
+        
+        $array = [
+            'name' => 'category',
+            'product' => 'product-name',
+            'brand' => 'brand-name',
+        ];
 
-        $product = new Menu(['name' => 'product']);
-        $product->prependTo($category);
+            $category = new Menu(['name' => $array['name']]);
+            $category->makeRoot();
 
-        $node = Menu::findOne(['name' => 'product']);
-        $node->prependTo(new Menu(['name' => 'type']));
+            $product = new Menu(['name' => $array['product']]);
+            $product->prependTo($category);
+
+            $brand = new Menu(['name' => $array['brand']]);
+            $brand->appendTo($product);
     }
 }

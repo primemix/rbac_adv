@@ -14,7 +14,6 @@ class m180111_094509_create_menu_table extends Migration
     {
         $this->createTable('{{%menu}}', [
             'id' => $this->primaryKey(),
-            'tree' => $this->integer(),
             'lft' => $this->integer()->notNull(),
             'rgt' => $this->integer()->notNull(),
             'depth' => $this->integer()->notNull(),
