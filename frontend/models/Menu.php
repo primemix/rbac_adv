@@ -6,8 +6,6 @@ use creocoder\nestedsets\NestedSetsBehavior;
 use yii\db\ActiveRecord;
 
 /**
- * MultipleTree
- *
  * @property integer $id
  * @property integer $tree
  * @property integer $lft
@@ -25,6 +23,9 @@ Class Menu extends ActiveRecord
         return 'menu';
     }
 
+    /**
+     * @return array
+     */
     public function behaviors()
     {
         return [
@@ -38,6 +39,9 @@ Class Menu extends ActiveRecord
         ];
     }
 
+    /**
+     * @return array
+     */
     public function rules()
     {
         return [
@@ -45,13 +49,19 @@ Class Menu extends ActiveRecord
         ];
     }
 
+    /**
+     * @return array
+     */
     public function transactions()
     {
         return [
             self::SCENARIO_DEFAULT => self::OP_ALL,
         ];
     }
-    
+
+    /**
+     * @return MenuQuery
+     */
     public static function find()
     {
         return new MenuQuery(get_called_class());

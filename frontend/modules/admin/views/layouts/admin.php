@@ -37,6 +37,7 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'Post', 'url' => ['/admin/post']],
         ['label' => 'Roles', 'url' => ['/admin/rbac']],
         ['label' => 'Users', 'url' => ['/admin/user']],
         ['label' => 'Access', 'url' => ['/admin/access']],
